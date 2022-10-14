@@ -1,3 +1,7 @@
+This app is based in 
+[https://github.com/Ojitos369/reango](https://github.com/Ojitos369/reango) 
+and [https://github.com/Ojitos369/base-react](https://github.com/Ojitos369/base-react)  
+
 ### Activate the environment
 
 ```shell
