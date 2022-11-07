@@ -1,4 +1,5 @@
 venv
 *__pycache__*
-front/node_modules
-front/build
+*/node_modules
+*/build
+*/dist

@@ -29,7 +29,7 @@ class Command(BaseCommand):
         pwd = os.getcwd()
         name = options['name'] if options['name'] else 'main'
         
-        react_build = options['origin'] if options['origin'] else os.path.join(BASE_DIR, 'front', 'build')
+        react_build = options['origin'] if options['origin'] else os.path.join(BASE_DIR, 'front', 'dist')
         templates_dir = f"templates/{options['template']}" if options['template'] else os.path.join(BASE_DIR, 'templates')
         static_dir = f"static/{options['static']}" if options['static'] else 'static/'#os.path.join(BASE_DIR, 'static')
         replace_localhost = str(options['rl_localhost']) if str(options['rl_localhost']) != 'None' else 'T'
@@ -107,39 +107,76 @@ class Command(BaseCommand):
         
         open(f'{templates_dir}/{name}/index.html', 'w').write(html)
         
-        # get js name
-        files = os.listdir(f'{static_dir}/{name}/static/js')
-        # printwln(files)
-        file_name = ''
-        js_files = []
-        for file in files:
-            if file.endswith('.js'):
-                js_files.append(file)
-        # printwln(file_name)
-        
-        for file_name in js_files:
-            printwln(file_name)
-            # open js file
-            js = open(f'{static_dir}/{name}/static/js/{file_name}', 'r').read()
+        # ---------------------------------   FOR BUILD (like build with default)   --------------------------------- #
+        if react_build.endswith('build') or react_build.endswith('build/'):
+            # get js name
+            files = os.listdir(f'{static_dir}/{name}/static/js')
+            # printwln(files)
+            file_name = ''
+            js_files = []
+            for file in files:
+                if file.endswith('.js'):
+                    js_files.append(file)
+            # printwln(file_name)
             
-            structure = '''(\w=)\w.\w\+"(static/)'''
-            for match in re.finditer(structure, js):
-                new_name = f'{match.group(1)}"/{static_dir}/{name}/{match.group(2)}'
-                new_name = new_name.replace('//', '/')
-                printwln(match.group(0))
-                printwln(new_name)
-                js = js.replace(match.group(0), new_name)
-            open(f'{static_dir}/{name}/static/js/{file_name}', 'w').write(js)
-        
-        if replace_localhost:
-            js = open(f'{static_dir}/{name}/static/js/{file_name}', 'r').read()
-            structure = '''https?://localhost(:\d+)?'''
-            for match in re.finditer(structure, js):
-                printwln(match.group(0))
-                js = js.replace(match.group(0), '')
+            for file_name in js_files:
+                printwln(file_name)
+                # open js file
+                js = open(f'{static_dir}/{name}/static/js/{file_name}', 'r').read()
+                
+                structure = '''(\w=)\w.\w\+"(static/)'''
+                for match in re.finditer(structure, js):
+                    new_name = f'{match.group(1)}"/{static_dir}/{name}/{match.group(2)}'
+                    new_name = new_name.replace('//', '/')
+                    printwln(match.group(0))
+                    printwln(new_name)
+                    js = js.replace(match.group(0), new_name)
+                open(f'{static_dir}/{name}/static/js/{file_name}', 'w').write(js)
             
-            open(f'{static_dir}/{name}/static/js/{file_name}', 'w').write(js)
-
+            if replace_localhost:
+                js = open(f'{static_dir}/{name}/static/js/{file_name}', 'r').read()
+                structure = '''https?://localhost(:\d+)?'''
+                for match in re.finditer(structure, js):
+                    printwln(match.group(0))
+                    js = js.replace(match.group(0), '')
+                
+                open(f'{static_dir}/{name}/static/js/{file_name}', 'w').write(js)
+        
+        # ---------------------------------   FOR DIST (like build with Vite)   --------------------------------- #
+        elif react_build.endswith('dist') or react_build.endswith('dist/'):
+            # get js name
+            files = os.listdir(f'{static_dir}/{name}/assets')
+            # printwln(files)
+            file_name = ''
+            js_files = []
+            for file in files:
+                if file.endswith('.js'):
+                    js_files.append(file)
+            # printwln(file_name)
+            
+            for file_name in js_files:
+                printwln(file_name)
+                # open js file
+                js = open(f'{static_dir}/{name}/assets/{file_name}', 'r').read()
+                
+                # "/assets/edilogo.30cdd23e.png"
+                structure = '''(")(/assets/.+?")'''
+                for match in re.finditer(structure, js):
+                    new_name = f'{match.group(1)}/{static_dir}/{name}/{match.group(2)}'
+                    new_name = new_name.replace('//', '/')
+                    printwln(match.group(0))
+                    printwln(new_name)
+                    js = js.replace(match.group(0), new_name)
+                open(f'{static_dir}/{name}/assets/{file_name}', 'w').write(js)
+            
+            if replace_localhost:
+                js = open(f'{static_dir}/{name}/assets/{file_name}', 'r').read()
+                structure = '''https?://localhost(:\d+)?'''
+                for match in re.finditer(structure, js):
+                    printwln(match.group(0))
+                    js = js.replace(match.group(0), '')
+                
+                open(f'{static_dir}/{name}/assets/{file_name}', 'w').write(js)
 
         printwln('Done')
 
