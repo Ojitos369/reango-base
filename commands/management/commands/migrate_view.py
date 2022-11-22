@@ -94,13 +94,14 @@ class Command(BaseCommand):
         # replace all script and link like 
         # <script src="./index.js"></script> -> <script src="{% static 'main/index.js' %}"></script>
 
-        structure = '''((href|src)=")(?!http)(./)?(.+?..{2,5})(")'''
+        structure = '''((href|src)=")(?!http)(.?/)?(.+?..{2,5})(")'''
         for match in re.finditer(structure, html):
         #     print()
         #     print()
         #     printwln(match.group(0))
             changes = match.group(1)+"{% static '" + str(f"{options['static']}/" if options['static'] else '') +name+"/"+match.group(4) +"' %}"+match.group(5)
             # printwln(changes)
+            changes = changes.replace('//','/')
             html = html.replace(match.group(0), changes)
             # print()
             # print()
@@ -178,6 +179,13 @@ class Command(BaseCommand):
                 
                 open(f'{static_dir}/{name}/assets/{file_name}', 'w').write(js)
 
+
         printwln('Done')
 
+
+"""
+(<(script|link).*(href|src)=")\.(\/(.*)(\.css|\.js))("( |>))
+$1{% static 'main$4' %}$7
+0.- $0\n1.- $1\n2.- $2\n3.- $3\n4.-\n$4\n5.-\n$5\n6.-\n$6\n7.-$7\n8.- $8
+"""
 
