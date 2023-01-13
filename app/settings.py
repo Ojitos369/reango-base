@@ -151,4 +151,4 @@ email_settings = {
     'password': os.environ.get('GENERAL_EMAIL_HOST_PASSWORD'),
 }
 
-ce = CE(name_project = 'SECONDARY ERP', email_settings = email_settings)
+ce = CE(name_project = 'REANGO BASE', email_settings = email_settings)
