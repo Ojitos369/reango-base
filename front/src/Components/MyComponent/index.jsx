@@ -5,7 +5,6 @@ import { ModalThemeChanged } from '../Modals/ModalThemeChanged';
 function MyComponent() {
     const { ls, lf, s, f, Icons } = React.useContext(AllContext);
     const icons = new Icons();
-    
     return (
         <React.Fragment>
             <div className='row justify-content-center pt-5 h2 fw-bold'>
