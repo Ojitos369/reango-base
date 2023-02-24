@@ -32,7 +32,7 @@ function MyContext(props){
     const f = new functions(dispatch, s);
 
     const localInitialState = {
-        theme: 'dark',
+        theme: 'black',
     }
     // localStorage.removeItem('localStatev2');
     const [ls, localDispatch] = useLocalStorage('localState', localInitialState, f);
