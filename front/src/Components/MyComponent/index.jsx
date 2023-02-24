@@ -11,6 +11,8 @@ function MyComponent() {
                 <h2 className={`text-center basis-full mt-3 font-bold text-3xl ${ls?.theme === 'dark' ? 'text-white' : 'text-black'}`}
                 >
                     Actual theme: {ls.theme}
+                    <br />
+                    {s?.init?.saludo || ":'c"}
                 </h2>
                 <button
                     className="btn btn-primary basis-1/4 mt-3"

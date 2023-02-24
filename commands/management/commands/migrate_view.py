@@ -96,16 +96,24 @@ class Command(BaseCommand):
 
         structure = '''((href|src)=")(?!http)(.?/)?(.+?..{2,5})(")'''
         for match in re.finditer(structure, html):
-        #     print()
-        #     print()
-        #     printwln(match.group(0))
-            changes = match.group(1)+"{% static '" + str(f"{options['static']}/" if options['static'] else '') +name+"/"+match.group(4) +"' %}"+match.group(5)
+            #     print()
+            #     print()
+            #     printwln(match.group(0))
+            changes = match.group(1)+"{% static '" + str(
+                f"{options['static']}/" if options['static'] else '') + name+"/"+match.group(4) + "' %}"+match.group(5)
             # printwln(changes)
-            changes = changes.replace('//','/')
+            changes = changes.replace('//', '/')
             html = html.replace(match.group(0), changes)
             # print()
             # print()
         
+        # ---------------------------   ADD OPTION TO SHARE DATA FROM DJANGO TO REACT AT INIT WITH CONTEXT   --------------------------- #
+        to_add = '''<script>let from_init = {};try {from_init = "{{ data }}".replaceAll('&#x27;', '"');from_init = from_init.toString();from_init = JSON.parse(`${from_init}`);} catch (error) {from_init = {};}</script>'''
+        structure_for_script = '''(<title>.+?</title>)'''
+        for match in re.finditer(structure_for_script, html):
+            changes = match.group(1) + '\n' + to_add
+            html = html.replace(match.group(0), changes)
+
         open(f'{templates_dir}/{name}/index.html', 'w').write(html)
         
         # ---------------------------------   FOR BUILD (like build with default)   --------------------------------- #
