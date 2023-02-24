@@ -13,11 +13,19 @@ const MySwal = withReactContent(Swal);
 const AllContext = React.createContext();
 
 function MyContext(props){
+    let init;
+    try {
+        init = from_init;
+    }
+    catch (error) {
+        init = {};
+    }
 
     const initialState = {
         classNames: {
             generalStyles: 'bg-light text-dark',
-        }
+        },
+        init
     }
 
     const [s, dispatch] = useReducer({ reducer, initialState });
