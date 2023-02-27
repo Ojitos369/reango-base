@@ -116,7 +116,8 @@ class Command(BaseCommand):
             # print()
         
         # ---------------------------   ADD OPTION TO SHARE DATA FROM DJANGO TO REACT AT INIT WITH CONTEXT   --------------------------- #
-        to_add = '''<script>let from_init = {};try {from_init = "{{ data }}".replaceAll('&#x27;', '"');from_init = from_init.toString();from_init = JSON.parse(`${from_init}`);} catch (error) {from_init = {};}</script>'''
+        replaces = '''replaceAll('&#x27;', '"').replaceAll('True', 'true').replaceAll('False', 'false').replaceAll('None', 'null')'''
+        to_add = '''<script>let from_init = {};try {from_init = "{{ data }}".''' + replaces + ''';from_init = from_init.toString();from_init = JSON.parse(`${from_init}`);} catch (error) {from_init = {};}</script>'''
         structure_for_script = '''(<title>.+?</title>)'''
         for match in re.finditer(structure_for_script, html):
             changes = match.group(1) + '\n' + to_add

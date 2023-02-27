@@ -23,7 +23,7 @@ function MyContext(props){
 
     const initialState = {
         classNames: {
-            generalStyles: 'bg-light text-dark',
+            generalStyles: 'bg-white text-black',
         },
         init
     }
