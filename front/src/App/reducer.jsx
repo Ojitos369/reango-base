@@ -4,9 +4,12 @@ import withReactContent from 'sweetalert2-react-content';
 
 
 const MySwal = withReactContent(Swal);
+axios.defaults.withCredentials = true
+const link = 'http://localhost:8369/'
+const miAxios = axios.create({
+    baseURL: link,
+})
 
-let link = '';
-link = 'http://localhost:8000/'
 
 const actionTypes = {
     levels: {
@@ -174,7 +177,26 @@ class functions {
         this.d = d;
         this.s = s;
     }
-    
+
+    helloWorld = () => {
+        const url = 'api/hello_world/'
+        miAxios.get(
+            url
+        ).then(response => {
+            this.upgradeLvl1('main','message',response.data.message);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    validateRunMode = () => {
+        if (link.includes('local') && link.includes('host') && link.includes(':')) {
+            this.upgradeLvl0('prod_mode', false);
+        } else {
+            this.upgradeLvl0('prod_mode', true);
+        }
+    }
+
     // ------------------------------------------------------------------ //
     // ---------------------------   LEVELS   --------------------------- //
     // ------------------------------------------------------------------ //

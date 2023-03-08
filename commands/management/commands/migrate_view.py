@@ -3,11 +3,10 @@ import re
 
 from django.core.management.base import BaseCommand
 
-from ojitos369.utils import printwln
-
+from ojitos369.utils import printwln as pln
 from app.settings import BASE_DIR
 
-# def printwln(*args, **kwargs):
+# def pln(*args, **kwargs):
 #     cf = currentframe()
 #     line = cf.f_back.f_lineno
 #     print(f"{line}: ", *args, **kwargs)
@@ -42,9 +41,9 @@ class Command(BaseCommand):
         replace_localhost = True if replace_localhost[0].lower() in (
             'y', 't', 's',) else False
 
-        printwln(f'react_build: {react_build}')
-        printwln(f'templates_dir: {templates_dir}')
-        printwln(f'static_dir: {static_dir}')
+        pln(f'react_build: {react_build}')
+        pln(f'templates_dir: {templates_dir}')
+        pln(f'static_dir: {static_dir}')
 
         os.chdir(pwd)
 
@@ -63,11 +62,11 @@ class Command(BaseCommand):
 
         try:
             os.system(f'cp -rf {react_build}/* {static_dir}{name}')
-            # printwln('copy build to static/main')
+            # pln('copy build to static/main')
         except Exception as e:
             pass
-            # printwln('error en')
-            # printwln(str(e))
+            # pln('error en')
+            # pln(str(e))
 
         # mv index.html to templates main
 
@@ -79,25 +78,25 @@ class Command(BaseCommand):
         try:
             os.system(f'touch {templates_dir}/{name}/index.html')
             os.system(f'rm {templates_dir}/{name}/index.html')
-            # printwln('reset templates/main/index.html')
+            # pln('reset templates/main/index.html')
         except Exception as e:
             os.system(f'rm {templates_dir}/{name}/index.html')
-            # printwln('reset templates/main/index.html')
+            # pln('reset templates/main/index.html')
 
         try:
             os.system(
                 f'cp {static_dir}{name}/index.html {templates_dir}/{name}/')
-            # printwln('move index.html to templates/main/index.html')
+            # pln('move index.html to templates/main/index.html')
         except Exception as e:
             pass
-            # printwln('error en')
-            # printwln(str(e))
+            # pln('error en')
+            # pln(str(e))
 
         # add loader to index.html
         html = open(f'{templates_dir}/{name}/index.html', 'r').read()
-        # printwln(html)
+        # pln(html)
         html = loader + html
-        # printwln(html)
+        # pln(html)
 
         # replace all script and link like
         # <script src="./index.js"></script> -> <script src="{% static 'main/index.js' %}"></script>
@@ -106,10 +105,10 @@ class Command(BaseCommand):
         for match in re.finditer(structure, html):
             #     print()
             #     print()
-            #     printwln(match.group(0))
+            #     pln(match.group(0))
             changes = match.group(1)+"{% static '" + str(
                 f"{options['static']}/" if options['static'] else '') + name+"/"+match.group(4) + "' %}"+match.group(5)
-            # printwln(changes)
+            # pln(changes)
             changes = changes.replace('//', '/')
             html = html.replace(match.group(0), changes)
             # print()
@@ -129,16 +128,16 @@ class Command(BaseCommand):
         if react_build.endswith('build') or react_build.endswith('build/'):
             # get js name
             files = os.listdir(f'{static_dir}{name}/static/js')
-            # printwln(files)
+            # pln(files)
             file_name = ''
             js_files = []
             for file in files:
                 if file.endswith('.js'):
                     js_files.append(file)
-            # printwln(file_name)
+            # pln(file_name)
 
             for file_name in js_files:
-                printwln(file_name)
+                pln(file_name)
                 # open js file
                 js = open(
                     f'{static_dir}{name}/static/js/{file_name}', 'r').read()
@@ -147,8 +146,8 @@ class Command(BaseCommand):
                 for match in re.finditer(structure, js):
                     new_name = f'{match.group(1)}"/{static_dir}{name}/{match.group(2)}'
                     new_name = new_name.replace('//', '/')
-                    printwln(match.group(0))
-                    printwln(new_name)
+                    pln(match.group(0))
+                    pln(new_name)
                     js = js.replace(match.group(0), new_name)
                 open(f'{static_dir}{name}/static/js/{file_name}', 'w').write(js)
 
@@ -157,7 +156,7 @@ class Command(BaseCommand):
                     f'{static_dir}{name}/static/js/{file_name}', 'r').read()
                 structure = '''https?://localhost(:\d+)?'''
                 for match in re.finditer(structure, js):
-                    printwln(match.group(0))
+                    pln(match.group(0))
                     js = js.replace(match.group(0), '')
 
                 open(f'{static_dir}{name}/static/js/{file_name}', 'w').write(js)
@@ -166,16 +165,16 @@ class Command(BaseCommand):
         elif react_build.endswith('dist') or react_build.endswith('dist/'):
             # get js name
             files = os.listdir(f'{static_dir}{name}/assets')
-            # printwln(files)
+            # pln(files)
             file_name = ''
             js_files = []
             for file in files:
                 if file.endswith('.js'):
                     js_files.append(file)
-            # printwln(file_name)
+            # pln(file_name)
 
             for file_name in js_files:
-                printwln(file_name)
+                pln(file_name)
                 # open js file
                 js = open(f'{static_dir}{name}/assets/{file_name}', 'r').read()
 
@@ -183,8 +182,8 @@ class Command(BaseCommand):
                 for match in re.finditer(structure, js):
                     new_name = f'{match.group(1)}/{static_dir}{name}/{match.group(2)}'
                     new_name = new_name.replace('//', '/')
-                    printwln(match.group(0))
-                    printwln(new_name)
+                    pln(match.group(0))
+                    pln(new_name)
                     js = js.replace(match.group(0), new_name)
 
                 open(f'{static_dir}{name}/assets/{file_name}', 'w').write(js)
@@ -194,7 +193,7 @@ class Command(BaseCommand):
                         f'{static_dir}{name}/assets/{file_name}', 'r').read()
                     structure = '''https?://localhost(:\d+)?'''
                     for match in re.finditer(structure, js):
-                        printwln(match.group(0))
+                        pln(match.group(0))
                         js = js.replace(match.group(0), '')
 
                     open(f'{static_dir}{name}/assets/{file_name}', 'w').write(js)
@@ -205,10 +204,10 @@ class Command(BaseCommand):
             for file in files:
                 if file.endswith('.css'):
                     css_files.append(file)
-            # printwln(file_name)
+            # pln(file_name)
 
             for file_name in css_files:
-                printwln(file_name)
+                pln(file_name)
                 # open js file
                 css = open(
                     f'{static_dir}{name}/assets/{file_name}', 'r').read()
@@ -217,10 +216,9 @@ class Command(BaseCommand):
                 for match in re.finditer(structure, css):
                     new_name = f'{match.group(1)}/{static_dir}{name}/{match.group(2)}'
                     new_name = new_name.replace('//', '/')
-                    printwln(match.group(0))
-                    printwln(new_name)
+                    pln(match.group(0))
+                    pln(new_name)
                     css = css.replace(match.group(0), new_name)
                 open(f'{static_dir}{name}/assets/{file_name}', 'w').write(css)
 
-        printwln('Done')
-
+        pln('Done')

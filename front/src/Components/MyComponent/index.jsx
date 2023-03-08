@@ -21,6 +21,7 @@ function MyComponent() {
                     Change Theme
                     <span className='text-icon'>{icons.brush()}</span>
                 </button>
+                <h3 className='text-center w-full mt-3'>{s?.main?.message}</h3>
             </div>
             {/* {s.modals?.themes?.changed && <ModalThemeChanged zindex={-1} />} */}
             {s.modals?.themes?.changed && <ModalThemeChanged />}
