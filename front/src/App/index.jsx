@@ -7,6 +7,23 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 
 function AppUI() {
     const { s, ls, f, lf } = React.useContext(AllContext);
+
+    React.useEffect(() => {
+        f.validateRunMode();
+    }, [s?.exinit]);
+
+    // -------------------   Set cookies from front this can be use for validate login   ------------------- //
+    React.useEffect(() => {
+        const date = new Date();
+        const miliseconds = 1000 * 60 * 60 * 10;
+        date.setTime(date.getTime() + (miliseconds));
+        const dateExpired = date.toUTCString();
+        const expires = 'expires=' + dateExpired
+        const miCookie = "miCookie=" + 'data_de_mi_cookie' + ";" + expires + ";path=/";
+        document.cookie = miCookie;
+
+        f.helloWorld();
+    }, []);
     return (
         <div className={`text-${s.classNames.less}`}>
             <div 

@@ -11,5 +11,5 @@ from app.core.base_apis.apis import PostApi, GetApi
 class HelloWorld(GetApi):
     def main(self):
         self.response = {
-            'message': 'helloWorld'
+            'message': 'Hello World'
         }

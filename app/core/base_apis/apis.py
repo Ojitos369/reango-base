@@ -46,7 +46,10 @@ class BaseApi(APIView):
         self.data = json.loads(self.request.body.decode('utf-8'))
     
     def validate_session(self):
-        pass
+        request = self.request
+        cookies = request.COOKIES
+        mi_cookie = get_d(cookies, 'miCookie', default='')
+        pln(mi_cookie)
 
     def validar_permiso(self, usuarios_validos):
         pass

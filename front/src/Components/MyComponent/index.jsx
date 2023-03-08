@@ -22,6 +22,7 @@ function MyComponent() {
 
                 </button>
             </div>
+            <h3 className='text-center col-12'>{s?.main?.message}</h3>
             {/* {s.modals?.themes?.changed && <ModalThemeChanged zindex={-1} />} */}
             {s.modals?.themes?.changed && <ModalThemeChanged />}
         </React.Fragment>
