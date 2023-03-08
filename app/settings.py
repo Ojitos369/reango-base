@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     
     'commands.apps.CommandsConfig',
     'views.apps.ViewsConfig',
+    'apis.apps.ApisConfig',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,6 @@ email_settings = {
 }
 
 ce = CE(name_project = 'REANGO BASE', email_settings = email_settings)
+
+class MYE(Exception):
+    pass
