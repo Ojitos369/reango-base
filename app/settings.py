@@ -39,7 +39,6 @@ if not prod_mode:
         'http://localhost:5174',
     ]
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
