@@ -1,18 +1,10 @@
 import os
 import re
 
-from django.core.management.base import BaseCommand
-
-from ojitos369.utils import printwln as pln
+from app.core.bases.commands import MyBaseCommand, pj, pln, TF
 from app.settings import BASE_DIR
 
-# def pln(*args, **kwargs):
-#     cf = currentframe()
-#     line = cf.f_back.f_lineno
-#     print(f"{line}: ", *args, **kwargs)
-
-
-class Command(BaseCommand):
+class Command(MyBaseCommand):
 
     def add_arguments(self, parser):
 
@@ -26,7 +18,7 @@ class Command(BaseCommand):
         parser.add_argument('-rl', '--rl_localhost', type=str,
                             help='replace endpoint localhost with / default: true')
 
-    def handle(self, *args, **options):
+    def main(self, *args, **options):
         pwd = os.getcwd()
         name = options['name'] if options['name'] else 'main'
 

@@ -6,7 +6,7 @@ import json
 from ojitos369.utils import get_d
 
 # User
-from app.core.base_apis.apis import PostApi, GetApi
+from app.core.bases.apis import PostApi, GetApi
 
 class HelloWorld(GetApi):
     def main(self):
