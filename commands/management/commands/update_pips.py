@@ -1,8 +1,8 @@
 import os
-from django.core.management.base import BaseCommand
+from app.core.bases.commands import MyBaseCommand
 
-class Command(BaseCommand):
-    def handle(self, *args, **options):
+class Command(MyBaseCommand):
+    def main(self, *args, **options):
         command = ""
         command += "pip freeze > requirements.txt\n"
         command += "sed -i 's/==/>=/g' requirements.txt\n"
