@@ -1,10 +1,11 @@
 import os
 import re
 
-from app.settings import BASE_DIR
 from app.core.bases.commands import MyBaseCommand, pj, pln, TF, get_d
+from app.settings import BASE_DIR
 
 class Command(MyBaseCommand):
+
     def add_arguments(self, parser):
 
         parser.add_argument('-n', '--name', type=str, help='app name')

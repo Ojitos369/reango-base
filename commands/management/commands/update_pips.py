@@ -1,5 +1,5 @@
 import os
-from app.core.bases.commands import MyBaseCommand
+from app.core.bases.commands import MyBaseCommand, pj, pln, TF
 
 class Command(MyBaseCommand):
     def main(self, *args, **options):
