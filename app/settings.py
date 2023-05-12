@@ -151,7 +151,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 port = os.environ.get('GENERAL_EMAIL_PORT', None)
 email_settings = {
     'smtp_server': os.environ.get('GENERAL_EMAIL_HOST', None),
-    'port': , int(port) if port else None
+    'port': int(port) if port else None,
     'sender': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
     'receiver': 'ojitos369@gmail.com',
     'user': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
