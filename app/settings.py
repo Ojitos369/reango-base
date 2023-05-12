@@ -148,14 +148,17 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --------------------------------------   EMAILS AND ERRORS   -------------------------------------- #
-
+port = os.environ.get('GENERAL_EMAIL_PORT', None)
 email_settings = {
-    'smtp_server': os.environ.get('GENERAL_EMAIL_HOST'),
-    'port': int(os.environ.get('GENERAL_EMAIL_PORT')),
-    'sender': os.environ.get('GENERAL_EMAIL_HOST_USER'),
+    'smtp_server': os.environ.get('GENERAL_EMAIL_HOST', None),
+    'port': , int(port) if port else None
+    'sender': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
     'receiver': 'ojitos369@gmail.com',
-    'password': os.environ.get('GENERAL_EMAIL_HOST_PASSWORD'),
+    'user': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
+    'password': os.environ.get('GENERAL_EMAIL_HOST_PASSWORD', None),
 }
+if not (email_settings['user'] and email_settings['password']):
+    email_settings = None
 
 ce = CE(name_project = 'REANGO BASE', email_settings = email_settings)
 
