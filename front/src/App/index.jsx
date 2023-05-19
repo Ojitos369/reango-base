@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { MyComponent } from '../Components/MyComponent';
 import { MyContext } from './MyContext';
 import { AllContext } from './MyContext';
@@ -19,11 +19,15 @@ const BgTheme = () => {
 }
 
 function AppUI() {
-    const { s, ls, f, lf } = React.useContext(AllContext);
+    const { s, ls, f, hp } = React.useContext(AllContext);
 
     React.useEffect(() => {
         f.validateRunMode();
     }, [s?.exinit]);
+
+    useEffect(() => {
+        hp.cambiarThema(ls?.theme)
+    }, [ls?.theme]);
 
     // -------------------   Set cookies from front this can be use for validate login   ------------------- //
     React.useEffect(() => {
