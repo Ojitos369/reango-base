@@ -4,11 +4,9 @@ import withReactContent from 'sweetalert2-react-content';
 
 
 const MySwal = withReactContent(Swal);
-axios.defaults.withCredentials = true
-const link = 'http://localhost:8369/api/'
-const miAxios = axios.create({
-    baseURL: link,
-});
+
+let link = '';
+link = 'http://localhost:8000/'
 
 const actionTypes = {
     levels: {
@@ -175,23 +173,6 @@ class functions {
     constructor(d, s) {
         this.d = d;
         this.s = s;
-    }
-
-    init = {
-        helloWorld: () => {
-            const endPoint = 'hello_world/';
-            miAxios.get(endPoint)
-            .then(response => {
-                const message = response.data.message;
-                MySwal.fire({
-                    title: message,
-                    icon: 'success',
-                    confirmButtonText: 'Ok',
-                })
-            }).catch(error => {
-                console.log(error);
-            })
-        }
     }
     
     // ------------------------------------------------------------------ //

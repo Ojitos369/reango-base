@@ -20,15 +20,11 @@ const BgTheme = () => {
 }
 
 function AppUI() {
-    const { ls, f } = React.useContext(AllContext);
+    const { ls } = React.useContext(AllContext);
 
     useEffect(() => {
         cambiarThema(ls?.theme);
     }, [ls?.theme]);
-
-    useEffect(() => {
-        f.init.helloWorld();
-    }, []);
 
     return (
         <div className={`text-[var(--my-minor)]`}>
