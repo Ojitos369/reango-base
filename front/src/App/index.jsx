@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { MyComponent } from '../Components/MyComponent';
 import { MyContext } from './MyContext';
 import { AllContext } from './MyContext';
+import { cambiarThema } from './core/helper';
 import { Theme } from '../Components/Theme';
 import { Test } from '../Components/Test';
 
@@ -19,31 +20,14 @@ const BgTheme = () => {
 }
 
 function AppUI() {
-    const { s, ls, f, hp } = React.useContext(AllContext);
-
-    React.useEffect(() => {
-        f.validateRunMode();
-    }, [s?.exinit]);
+    const { ls } = React.useContext(AllContext);
 
     useEffect(() => {
-        hp.cambiarThema(ls?.theme)
+        cambiarThema(ls?.theme);
     }, [ls?.theme]);
 
-    // -------------------   Set cookies from front this can be use for validate login   ------------------- //
-    React.useEffect(() => {
-        const date = new Date();
-        const miliseconds = 1000 * 60 * 60 * 10;
-        date.setTime(date.getTime() + (miliseconds));
-        const dateExpired = date.toUTCString();
-        const expires = 'expires=' + dateExpired
-        const miCookie = "miCookie=" + 'data_de_mi_cookie' + ";" + expires + ";path=/";
-        document.cookie = miCookie;
-
-        f.helloWorld();
-    }, []);
-
     return (
-        <div className={`text-${s.classNames.less}`}>
+        <div className={`text-[var(--my-minor)]`}>
             <BgTheme />
             <Routes>
                 {/* -----------   Home   ----------- */}
