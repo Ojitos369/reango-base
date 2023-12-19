@@ -157,6 +157,15 @@ email_settings = {
     'user': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
     'password': os.environ.get('GENERAL_EMAIL_HOST_PASSWORD', None),
 }
+
+DEFAULT_FROM_EMAIL = email_settings['sender']
+DEFAULT_RECEIVER_EMAIL = email_settings['receiver']
+EMAIL_HOST = email_settings['smtp_server']
+EMAIL_HOST_USER = email_settings['user']
+EMAIL_HOST_PASSWORD = email_settings['password']
+DEFAULT_FROM_EMAIL = email_settings['sender']
+EMAIL_PORT = email_settings['port']
+
 if not (email_settings['user'] and email_settings['password']):
     email_settings = None
 
