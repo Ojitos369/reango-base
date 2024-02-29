@@ -31,5 +31,5 @@ venv
 *yarn-error.log*
 
 
-*.lock*
-*lock.*
+front/*.lock*
+front/*lock.*
