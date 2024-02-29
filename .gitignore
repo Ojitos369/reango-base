@@ -31,6 +31,5 @@ venv
 *yarn-error.log*
 
 
-# *bun.lockb
-# *pnpm-lock.yaml
-# *package-lock.json
+*.lock*
+*lock.*
