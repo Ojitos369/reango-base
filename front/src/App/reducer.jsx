@@ -177,7 +177,20 @@ class functions {
         this.d = d;
         this.s = s;
     }
-    
+
+    app = {
+        helloWorld: () => {
+            const end = 'app/hello_world/';
+            miAxios.get(end)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        }
+    }
+
     // ------------------------------------------------------------------ //
     // ---------------------------   LEVELS   --------------------------- //
     // ------------------------------------------------------------------ //

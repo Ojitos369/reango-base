@@ -1,11 +1,16 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.views.generic import TemplateView as View
 
-# Create your views here.
+class MyView(View):
+    def my_extra(self):
+        pass
 
-def index(request):
-    context = {
-        'data': {
-            'saludo': 'text from context from django'
-        }
-    }
-    return render(request, 'main/index.html', context)
+    def get(self, request, *args, **kwargs):
+        html_dir = self.html_dir
+        self.my_extra()
+        if 'url' in kwargs and kwargs['url']: return HttpResponseRedirect(kwargs['url'])
+        return render(request, html_dir)
+    
+class Index(MyView):
+    html_dir = "main/index.html"

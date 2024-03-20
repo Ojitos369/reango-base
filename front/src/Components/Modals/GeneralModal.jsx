@@ -27,6 +27,10 @@ const GeneralModal = props => {
         f.upgradeLvl2('modals', lvl1, lvl2, false);
     }
 
+    useEffect(() => {
+        f.upgradeLvl1('shortCuts', 'keys', {});
+    }, []);
+
     const modalRef = useRef(null);
     useLocalTab(s.modals?.[lvl1]?.[lvl2], modalRef);
 

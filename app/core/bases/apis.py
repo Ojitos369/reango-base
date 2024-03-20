@@ -75,7 +75,6 @@ class BaseApi(APIView):
         try:
             if self.request.method in ('POST', 'PUT', 'PATCH'):
                 self.get_post_data()
-            self.get_s_cookie()
             self.validate_session()
             self.main()
         except Exception as e:

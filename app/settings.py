@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     'rest_framework',
     
     'commands.apps.CommandsConfig',
-    'views.apps.ViewsConfig',
-    'apis.apps.ApisConfig',
 ]
 
 MIDDLEWARE = [
