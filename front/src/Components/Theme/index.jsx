@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect } from 'react';
-import { AllContext } from '../../App/MyContext';
+import { useEffect } from 'react';
+import { useStates } from '../../App/useStates';
 import { Sun, Moon } from '../../App/Icons';
 import styles from './styles/index.module.scss';
 // console.log(styles);
 
 function Theme() {
-    const { ls, lf, s, f } = React.useContext(AllContext);
+    const { ls, lf, s, f } = useStates();
     return (
         <button
             className={`${styles.toggle_theme_button}`}

@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { AllContext } from '../../App/MyContext';
+import { useStates } from '../../App/useStates';
 
-function Test() {
-    const { ls, lf, s, f } = useContext(AllContext);
+const Test = props => {
+    const { ls, lf, s, f } = useStates();
     return (
         <>
             Component to make tests

@@ -1,12 +1,12 @@
-import { useContext, useMemo } from 'react';
-import { AllContext } from '../../App/MyContext';
+import { useMemo } from 'react';
+import { useStates } from '../../App/useStates';
 import { ModalThemeChanged } from '../../Components/Modals/ModalThemeChanged';
 
 import './styles/index.module.css';
 import { useEffect } from 'react';
 
 const Index = props => {
-    const { ls, lf, s, f } = useContext(AllContext);
+    const { ls, lf, s, f } = useStates();
     const theme = useMemo(() => ls.theme, [ls.theme]);
     const modalChangeTheme = useMemo(() => !!s.modals?.themes?.changed, [s.modals?.themes?.changed]);
 
