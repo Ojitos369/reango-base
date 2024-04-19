@@ -100,7 +100,7 @@ class PutApi(BaseApi):
     def put(self, request, **kwargs):
         return self.exec(request, **kwargs)
 
-# 27 junio - 3 julio
+
 class DeleteApi(BaseApi):
     def delete(self, request, **kwargs):
         return self.exec(request, **kwargs)
