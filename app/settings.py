@@ -34,9 +34,16 @@ ALLOWED_HOSTS = ['*']
 if not prod_mode:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ALLOW_CREDENTIALS = True
-    CORS_ORIGIN_WHITELIST = [
-        'http://localhost:5173',
-        'http://localhost:5174',
+    # CORS_ORIGIN_WHITELIST = [
+    #     'http://localhost:5173',
+    #     'http://localhost:5174',
+    # ]
+    # regex
+    CORS_ORIGIN_REGEX_WHITELIST = [
+        r'^(https?://)?localhost.*',
+    ]
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r'^(https?://)?localhost.*',
     ]
 
 
@@ -146,14 +153,14 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --------------------------------------   EMAILS AND ERRORS   -------------------------------------- #
-port = os.environ.get('GENERAL_EMAIL_PORT', None)
+port = os.environ.get('EMAIL_PORT', None)
 email_settings = {
-    'smtp_server': os.environ.get('GENERAL_EMAIL_HOST', None),
+    'smtp_server': os.environ.get('EMAIL_HOST', None),
     'port': int(port) if port else None,
-    'sender': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
+    'sender': os.environ.get('EMAIL_HOST_USER', None),
     'receiver': 'ojitos369@gmail.com',
-    'user': os.environ.get('GENERAL_EMAIL_HOST_USER', None),
-    'password': os.environ.get('GENERAL_EMAIL_HOST_PASSWORD', None),
+    'user': os.environ.get('EMAIL_HOST_USER', None),
+    'password': os.environ.get('EMAIL_HOST_PASSWORD', None),
 }
 
 DEFAULT_FROM_EMAIL = email_settings['sender']
