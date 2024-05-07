@@ -29,7 +29,7 @@ class BaseApi(APIView):
         except MYE as e:
             error = self.ce.show_error(e)
             print_line_center(error)
-            self.status = 400 if self.status == 200 else self.status
+            self.status = 400 if self.status not in range(400, 600) else self.status
             self.response = {
                 'message': str(e),
                 'error': str(e)
@@ -37,7 +37,7 @@ class BaseApi(APIView):
         except Exception as e:
             error = self.ce.show_error(e, send_email=prod_mode)
             print_line_center(error)
-            self.status = 500 if self.status == 200 else self.status
+            self.status = 500 if self.status not in range(400, 600) else self.status
             self.response = {
                 'message': str(e),
                 'error': str(e)

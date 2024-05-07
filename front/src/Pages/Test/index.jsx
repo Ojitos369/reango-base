@@ -1,4 +1,4 @@
-import { useStates } from '../../App/useStates';
+import { useStates } from '../../Hooks/useStates';
 
 const Test = props => {
     const { ls, lf, s, f } = useStates();
