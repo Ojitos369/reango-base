@@ -17,17 +17,21 @@ from ojitos369.utils import get_d, print_line_center, printwln as pln
 from app.settings import MYE, prod_mode, ce
 
 class BaseApi(APIView):
-    status = 200
-    response = {}
-    ce = ce
-    MYE = MYE
-    response_mode = 'json'
+    def __init__(self):
+        self.status = 200
+        self.response = {}
+        self.ce = ce
+        self.MYE = MYE
+        self.response_mode = 'json'
+        self.extra_error = ""
 
     def errors(self, e):
         try:
+            self.extra_error = f'\n{self.extra_error}'
+            self.extra_error += f'\nIp de la petition: {self.petition_ip}'
             raise e
         except MYE as e:
-            error = self.ce.show_error(e)
+            error = self.ce.show_error(e, extra=self.extra_error)
             print_line_center(error)
             self.status = 400 if self.status not in range(400, 600) else self.status
             self.response = {
@@ -35,7 +39,7 @@ class BaseApi(APIView):
                 'error': str(e)
             }
         except Exception as e:
-            error = self.ce.show_error(e, send_email=prod_mode)
+            error = self.ce.show_error(e, send_email=prod_mode, extra=self.extra_error)
             print_line_center(error)
             self.status = 500 if self.status not in range(400, 600) else self.status
             self.response = {
@@ -69,9 +73,22 @@ class BaseApi(APIView):
         
         print_line_center(f"{class_name} - {file_name}:{line} ")
     
+    def get_client_ip(self):
+        ip = ''
+        try:
+            x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = self.request.META.get('REMOTE_ADDR')
+        except:
+            ip = 'unknown'
+        self.petition_ip = ip
+    
     def exec(self, request, **kwargs):
         self.request = request
         self.kwargs = kwargs
+        self.get_client_ip()
         try:
             if self.request.method in ('POST', 'PUT', 'PATCH'):
                 self.get_post_data()
@@ -118,4 +135,4 @@ class FullApi(BaseApi):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.post = self.get = self.put = self.patch = self.delete = self.gen
-        
+
