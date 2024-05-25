@@ -16,10 +16,11 @@ from ojitos369.text_format import TextFormat as TF
 from app.settings import MYE, prod_mode, ce
 
 class MyBaseCommand(BaseCommand):
-    MYE = MYE
-    response_mode = 'json'
-    raise_error = True
-    ce = ce
+    def __init__(self):
+        self.MYE = MYE
+        self.response_mode = 'json'
+        self.raise_error = True
+        self.ce = ce
 
     def errors(self, e):
         try:
