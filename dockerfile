@@ -1,23 +1,43 @@
 FROM python:3.12
-RUN apt-get update && apt-get upgrade -y
+
+# ENVS
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Mexico_City
+ENV LANG=es_MX.UTF-8
+ENV LANGUAGE=es_MX:es
+ENV LC_ALL=es_MX.UTF-8
+ENV APPHOME=/usr/src/app
+ENV PYTHONUNBUFFERED 1
+
+# DEPENDENCIES
+RUN apt-get update && apt-get upgrade -y && install -y curl git zsh neovim wget unzip cron locales tzdata
+
+# ZSH 
 RUN apt install git neovim curl zsh -y
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 RUN chsh -s $(which zsh)
-# Install here dependencies
 
-ENV APPHOME=/usr/src/app/
+# LOCALES
+RUN echo "es_MX.UTF-8 UTF-8" >> /etc/locale.gen && \
+    locale-gen es_MX.UTF-8 && \
+    ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && \
+    echo "America/Mexico_City" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get clean
+
+# CRONS
+RUN mkdir /usr/src/logs
+RUN echo "" > /etc/cron.d/my_cron \
+    && chmod 0644 /etc/cron.d/my_cron \
+    && crontab /etc/cron.d/my_cron
+# RUN echo "* * * * * /usr/src/app/crons/test.sh >> /usr/src/logs/test.log 2>&1" >> /etc/cron.d/my_cron
+
+# PYTHON
 WORKDIR $APPHOME
-ENV PYTHONUNBUFFERED 1
 COPY . $APPHOME
-
 RUN pip install -r requirements.txt
 
-# docker network create rng
-# docker network connect rng rng-py
-# Connect nerwork if you need it
-# docker network connect rng rng
 # docker start rng-py
+# docker rm -f rng-py && docker image rm rng-web && docker network rm rng-net && docker compose up -d
 # docker rm -f rng-py && docker image rm rng-web && docker compose up -d
+
