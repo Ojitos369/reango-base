@@ -9,8 +9,10 @@ services:
       - .:/usr/src/app
     ports:
       - "8000:8000"
+    networks:
+      - rng_net
 
-# networks:
-#   default:
-#     external:
-#       name: rng-net
+networks:
+  rng_net:
+    external: true
+    name: rng-net
