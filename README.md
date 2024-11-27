@@ -4,10 +4,23 @@ and [https://github.com/Ojitos369/base-react](https://github.com/Ojitos369/base-
 
 ### Activate the environment
 
+* VENV
 ```shell
 python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
+```
+
+* CONDA
+```shell
+conda create -y --name rng python=3.12
+conda activate rng
+pip install -r requirements.txt
+```
+
+* DOCKER
+```shell
+docker-compose up
 ```
 
 ### Install npm packages
