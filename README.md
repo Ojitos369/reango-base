@@ -40,24 +40,23 @@ python manage.py migrate_view
 ```
 
 
-## Docker configs
-### docker-compose.yml
-> services > web > container_name 
-- - Put the name of your project
-> services > web > ports
-- - Put the port you want to use 
-* if you need network for your proyect uncomment the network section in docker-compose.yml
+## Docker configs  
+### docker-compose.yml  
+> services > web > container_name  
+- - Put the name of your project  
+> services > web > ports  
+- - Put the port you want to use  
 
-### dockerfile
-##### Envs
-Put here you environment variables
-##### Dependencies
-Put here the dependencies do you need to install in your container
-##### Locales
-Configure the locals to the zone do you need
-##### Crons
-Add Cron jobs to do you need and put the shell script in the folder crons
-    * you can use test cron like example
-##### Python
-If you change de requirements mode for any other, you need change the method to install the python packages here
+### dockerfile  
+##### Envs  
+Put here you environment variables  
+##### Dependencies  
+Put here the dependencies do you need to install in your container  
+##### Locales  
+Configure the locals to the zone do you need  
+##### Crons  
+Add Cron jobs to do you need and put the shell script in the folder crons  
+    * you can use test cron like example  
+##### Python  
+If you change de requirements mode for any other, you need change the method to install the python packages here  
 
