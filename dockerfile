@@ -28,9 +28,9 @@ RUN echo "es_MX.UTF-8 UTF-8" >> /etc/locale.gen && \
 # CRONS
 RUN mkdir /usr/src/logs
 RUN echo "" > /etc/cron.d/my_cron \
-    && chmod 0644 /etc/cron.d/my_cron \
-    && crontab /etc/cron.d/my_cron
+    && chmod 0644 /etc/cron.d/my_cron
 # RUN echo "* * * * * /usr/src/app/crons/test.sh >> /usr/src/logs/test.log 2>&1" >> /etc/cron.d/my_cron
+RUN crontab /etc/cron.d/my_cron
 
 # PYTHON
 WORKDIR $APPHOME
