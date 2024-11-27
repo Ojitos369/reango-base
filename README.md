@@ -2,7 +2,7 @@ This app is based in
 [https://github.com/Ojitos369/reango](https://github.com/Ojitos369/reango) 
 and [https://github.com/Ojitos369/base-react](https://github.com/Ojitos369/base-react)  
 
-### Activate the environment
+## Activate the environment
 
 * VENV
 ```shell
@@ -23,14 +23,14 @@ pip install -r requirements.txt
 docker-compose up
 ```
 
-### Install npm packages
+## Install npm packages
     
 ```shell
 cd front
 npm install
 ```
 
-#### Work  
+## Work  
 you can edit react app an make the build
 
 and run django command to migrate view
@@ -38,3 +38,26 @@ and run django command to migrate view
 ```shell
 python manage.py migrate_view
 ```
+
+
+## Docker configs
+### docker-compose.yml
+> services > web > container_name 
+- - Put the name of your project
+> services > web > ports
+- - Put the port you want to use 
+* if you need network for your proyect uncomment the network section in docker-compose.yml
+
+### dockerfile
+##### Envs
+Put here you environment variables
+##### Dependencies
+Put here the dependencies do you need to install in your container
+##### Locales
+Configure the locals to the zone do you need
+##### Crons
+Add Cron jobs to do you need and put the shell script in the folder crons
+    * you can use test cron like example
+##### Python
+If you change de requirements mode for any other, you need change the method to install the python packages here
+
