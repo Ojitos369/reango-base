@@ -11,7 +11,8 @@ ENV PYTHONUNBUFFERED 1
 
 # DEPENDENCIES
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y curl git zsh neovim wget unzip cron locales tzdata
+RUN apt-get install -y \
+    curl git zsh neovim wget unzip cron locales tzdata
 
 # ZSH 
 RUN apt install git neovim curl zsh -y
