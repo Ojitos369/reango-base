@@ -15,14 +15,26 @@ const ListenKeys = props => {
 }
 
 const GeneralModal = props => {
+    let { BaseModal } = props;
+    BaseModal = BaseModal || LocalModal;
+    return (
+        <BaseModal {...props} />
+    )
+}
+
+
+const LocalModal = props => {
     const { s, f } = useStates();
-    const { Component, lvl1, lvl2 } = props;
+    const { Component, lvl1, lvl2, autoFocus=true } = props;
     const keyExec = !!s.modals?.[lvl1]?.[lvl2];
     const ztyle = props.zindex ? {zIndex: props.zindex} : {};
 
     const close = () => {
         if (s.extra_modals?.[lvl1]?.[lvl2]?.close) {
             s.extra_modals[lvl1][lvl2].close();
+        }
+        if (props.close) {
+            props.close();
         }
         f.u2('modals', lvl1, lvl2, false);
     }
@@ -32,7 +44,8 @@ const GeneralModal = props => {
     }, []);
 
     const modalRef = useRef(null);
-    useLocalTab(s.modals?.[lvl1]?.[lvl2], modalRef);
+    const padding = props.padding ?? 'pb-5 pt-5';
+    useLocalTab(s.modals?.[lvl1]?.[lvl2], modalRef, autoFocus);
 
     return (
         <>
@@ -49,7 +62,7 @@ const GeneralModal = props => {
             ref={modalRef}
             >
             <div 
-                className={`flex ${styles.modal_container} ${styles[props?.modal_container_w || "modal_container_50"]} pb-5 pt-5 ${styles.my_modal}`}
+                className={`flex ${styles.modal_container} ${styles[props?.modal_container_w || "modal_container_50"]} ${padding} ${styles.my_modal}`}
                 onClick={e => e.stopPropagation()}
                 >
                 <Component 
