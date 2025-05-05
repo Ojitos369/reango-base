@@ -13,3 +13,4 @@ class HelloWorld(GetApi):
         self.response = {
             'message': 'Hello World'
         }
+
